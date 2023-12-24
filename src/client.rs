@@ -1,8 +1,5 @@
 use chat::{chatter_client::ChatterClient, HealthRequest};
-use tonic::{
-    transport::Endpoint,
-    Request,
-};
+use tonic::{transport::Endpoint, Request};
 
 pub mod chat {
     tonic::include_proto!("chat");

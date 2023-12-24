@@ -1,8 +1,9 @@
 use chat::{
     chatter_server::{Chatter, ChatterServer},
-    HealthReply, HealthRequest,
+    ChatMessage, HealthReply, HealthRequest,
 };
-use tonic::{transport::Server, Request, Response, Status};
+use tokio_stream::wrappers::ReceiverStream;
+use tonic::{transport::Server, Request, Response, Status, Streaming};
 
 pub mod chat {
     tonic::include_proto!("chat");
@@ -20,6 +21,15 @@ impl Chatter for SimpleChatter {
         println!("INFO: Received request from {:?}", request.remote_addr());
 
         Ok(Response::new(HealthReply {}))
+    }
+
+    type SendAndReceiveMessagesStream = ReceiverStream<Result<ChatMessage, Status>>;
+
+    async fn send_and_receive_messages(
+        &self,
+        _: Request<Streaming<ChatMessage>>,
+    ) -> Result<Response<Self::SendAndReceiveMessagesStream>, Status> {
+        unimplemented!()
     }
 }
 
