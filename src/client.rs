@@ -1,5 +1,8 @@
 use chat::{chatter_client::ChatterClient, HealthRequest};
-use tonic::Request;
+use tonic::{
+    transport::Endpoint,
+    Request,
+};
 
 pub mod chat {
     tonic::include_proto!("chat");
@@ -7,7 +10,9 @@ pub mod chat {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let mut client = ChatterClient::connect("http://[::1]:50051").await?;
+    let endpoint = Endpoint::from_static("http://[::1]:50051");
+    let channel = endpoint.connect().await?;
+    let mut client = ChatterClient::new(channel);
 
     let request = Request::new(HealthRequest {});
 
