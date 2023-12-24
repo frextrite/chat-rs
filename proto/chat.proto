@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package chat;
+
+service Chatter {
+    rpc ProbeHealth (HealthRequest) returns (HealthReply);
+}
+
+message HealthRequest {}
+
+message HealthReply {}

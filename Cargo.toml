@@ -5,4 +5,18 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[[bin]]
+name = "chat-server"
+path = "src/server.rs"
+
+[[bin]]
+name = "chat-client"
+path = "src/client.rs"
+
 [dependencies]
+prost = "0.12.3"
+tokio = { version = "1.35.1", features = ["macros", "rt-multi-thread"] }
+tonic = "0.10.2"
+
+[build-dependencies]
+tonic-build = "0.10.2"
